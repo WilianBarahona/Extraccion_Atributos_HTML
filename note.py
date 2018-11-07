@@ -75,7 +75,9 @@ from collections import OrderedDict
 from house import House
 import re
 
-archivo = open("casas/10053.html","r")
+#archivo = open("casas/10053.html","r", encoding='utf-8')  ##encoding = 'utf-8' para windows
+
+archivo = open("casas/10053.html","r", encoding='utf-8')
 html = archivo.read() #leer archivo completo, y almacenarlo en un string(str)
 
 ##Expresiones regulares
@@ -157,9 +159,6 @@ for line in lines:
 
 # price = price.replace('<p class="price">','')  #Busca '<p class="price">' y todas las apariciones #las reemplaza por -->  ''
 # price = price.rstrip('</p>')   #Elimina la cadena '</p>' al final del str
-# price = price.replace('L.','')
-# price = price. replace('<>')
-
 
 ###===========Reeplazo de texto===============###
 
@@ -184,8 +183,8 @@ dic_replace_txt_feats =OrderedDict([('<li class="tick">',''), ('</li>','')])
 
 
 ###============Reemplazo de varibles==============########
-price=replace_all(price , dic_replace_txt_price)
-location=replace_all(location , dic_replace_txt_location)
+price = replace_all(price , dic_replace_txt_price)
+location = replace_all(location , dic_replace_txt_location)
 size = replace_all(size , dic_replace_txt_size)
 num_bedrooms = replace_all(num_bedrooms , dic_replace_txt_num_bedrooms) 
 num_bathrooms = replace_all(num_bathrooms , dic_replace_txt_num_bathrooms)
@@ -193,11 +192,47 @@ inner_feats = replace_all(inner_feats , dic_replace_txt_feats)
 outer_feats = replace_all(outer_feats , dic_replace_txt_feats)
 environ_feacts = replace_all(environ_feacts , dic_replace_txt_feats)
 
-print(price)
-print(location)
-print(size)
-print(num_bedrooms)
-print(num_bathrooms)
-print(inner_feats)
-print(outer_feats)
-print(environ_feacts)
+#### =============Test de variables ==========####
+# print(price)
+# print(location)
+# print(size)
+# print(num_bedrooms)
+# print(num_bathrooms)
+# print(list_inner)
+# print(list_outer)
+# print(list_environ)
+
+####===========Insertar caracteristicas en una lista==============##
+###=======Establecer un conjunto a partir de una lista ---> set_feats = set(lista)===##
+list_inner = []
+lines = inner_feats.split('\n')
+for line in lines:
+  if line != '':
+    list_inner.append(line)
+
+list_outer = []
+lines = outer_feats.split('\n')
+for line in lines:
+  if line != '':
+    list_outer.append(line)
+
+list_environ = []
+lines = environ_feacts.split('\n')
+for line in lines:
+  if line != '':
+    list_environ.append(line)
+
+
+
+dic = {
+'price': price,
+'location': location,
+'size': size,
+'num_bedrooms': num_bedrooms,
+'num_bathrooms': num_bedrooms,
+'inner_feats': set(list_inner),
+'outer_feats': set(list_outer),
+'environ_feats': set(list_environ)
+}
+
+print(dic)
