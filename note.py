@@ -76,8 +76,8 @@ from house import House
 import re
 
 #archivo = open("casas/10053.html","r", encoding='utf-8')  ##encoding = 'utf-8' para windows
-
-archivo = open("casas/10053.html","r", encoding='utf-8')
+files = '10564.html'
+archivo = open("casas/" + files,"r", encoding='utf-8')
 html = archivo.read() #leer archivo completo, y almacenarlo en un string(str)
 
 ##Expresiones regulares
@@ -97,6 +97,7 @@ lines = html.split('\n')
 bool_inner_feats = False
 bool_outer_feats = False
 bool_environ_feats = False
+environ_feacts=''
 
 for line in lines:
   line = line.lstrip() #lstrip borra spacios en blanco a la izquierda de una cadena
@@ -137,7 +138,6 @@ for line in lines:
       outer_feats = outer_feats + line + '\n'
 
   if re_environ_feats.match(line):
-    environ_feacts=''
     bool_inner_feats = False
     bool_outer_feats = False
     bool_environ_feats = True
@@ -183,6 +183,7 @@ dic_replace_txt_feats =OrderedDict([('<li class="tick">',''), ('</li>','')])
 
 
 ###============Reemplazo de varibles==============########
+list_environ = []
 price = replace_all(price , dic_replace_txt_price)
 location = replace_all(location , dic_replace_txt_location)
 size = replace_all(size , dic_replace_txt_size)
@@ -190,17 +191,22 @@ num_bedrooms = replace_all(num_bedrooms , dic_replace_txt_num_bedrooms)
 num_bathrooms = replace_all(num_bathrooms , dic_replace_txt_num_bathrooms)
 inner_feats = replace_all(inner_feats , dic_replace_txt_feats)
 outer_feats = replace_all(outer_feats , dic_replace_txt_feats)
-environ_feacts = replace_all(environ_feacts , dic_replace_txt_feats)
+if environ_feacts != '':
+  environ_feacts = replace_all(environ_feacts , dic_replace_txt_feats)
+  lines = environ_feacts.split('\n')
+  for line in lines:
+    if line != '':
+      list_environ.append(line)
 
-#### =============Test de variables ==========####
+########=====test=============######
 # print(price)
 # print(location)
 # print(size)
 # print(num_bedrooms)
 # print(num_bathrooms)
-# print(list_inner)
-# print(list_outer)
-# print(list_environ)
+# print(inner_feats)
+# print(outer_feats)
+# print(environ_feacts)
 
 ####===========Insertar caracteristicas en una lista==============##
 ###=======Establecer un conjunto a partir de una lista ---> set_feats = set(lista)===##
@@ -216,13 +222,17 @@ for line in lines:
   if line != '':
     list_outer.append(line)
 
-list_environ = []
-lines = environ_feacts.split('\n')
-for line in lines:
-  if line != '':
-    list_environ.append(line)
 
 
+#### =============Test de variables ==========####
+# print(price)
+# print(location)
+# print(size)
+# print(num_bedrooms)
+# print(num_bathrooms)
+# print(list_inner)
+# print(list_outer)
+# print(list_environ)
 
 dic = {
 'price': price,

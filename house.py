@@ -127,7 +127,8 @@ class House:
     num_bathrooms = replace_all(num_bathrooms , dic_replace_txt_num_bathrooms)
     inner_feats = replace_all(inner_feats , dic_replace_txt_feats)
     outer_feats = replace_all(outer_feats , dic_replace_txt_feats)
-    environ_feacts = replace_all(environ_feacts , dic_replace_txt_feats)
+    if environ_feacts != '':
+      environ_feacts = replace_all(environ_feacts , dic_replace_txt_feats)
 
     #### =============Test de variables ==========####
     # print(price)
@@ -171,9 +172,6 @@ class House:
     'outer_feats': set(list_outer),
     'environ_feats': set(list_environ)
     }
-
-
-
 
     return dic
 
