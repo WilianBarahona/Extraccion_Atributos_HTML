@@ -20,16 +20,21 @@ class HousesContainer:
     self.list_houses = []
     for file_html in list_file_html:
       archivo = open("casas/"+file_html,"r", encoding='utf-8')
-      # self.list_houses.append(House(archivo.read(),file_html))
-      self.casa = House(archivo.read(), file_html)
+      self.list_houses.append(House(archivo.read(),file_html))
+      #self.casa = House(archivo.read(), file_html)
  
 
   def get_homes(self):
     """Retorna un lista que contiene todo los objetos de tipo House creados en el constructor."""
-    return self.casa
+    list_get_homes = []
+    for l in self.list_houses:
+      list_get_homes.append(l.get_feats())
+    ##return self.list_houses[4].get_feats()
+    return self.list_houses
 
 contenedor = HousesContainer()
-c= contenedor.get_homes().get_feats()
+c = contenedor.get_homes()
+#c= contenedor.get_homes().get_feats()
 print(c)
 # dic = contenedor.casa.get_feats()
 # print(dic)

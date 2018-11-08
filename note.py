@@ -97,7 +97,15 @@ lines = html.split('\n')
 bool_inner_feats = False
 bool_outer_feats = False
 bool_environ_feats = False
-environ_feacts=''
+
+price = ''
+location = ''
+size = ''
+num_bedrooms = ''
+num_bathrooms = ''
+inner_feats = ''
+outer_feats = ''
+environ_feacts = ''
 
 for line in lines:
   line = line.lstrip() #lstrip borra spacios en blanco a la izquierda de una cadena
@@ -118,7 +126,6 @@ for line in lines:
     num_bathrooms = line
 
   if re_inner_feats.match(line):
-    inner_feats = ''
     bool_inner_feats = True
     bool_outer_feats = False
     bool_environ_feats = False
@@ -128,7 +135,6 @@ for line in lines:
       inner_feats = inner_feats + line + '\n'
   
   if re_outer_feats.match(line):
-    outer_feats = ''
     bool_inner_feats = False
     bool_outer_feats = True
     bool_environ_feats = False
@@ -183,45 +189,47 @@ dic_replace_txt_feats =OrderedDict([('<li class="tick">',''), ('</li>','')])
 
 
 ###============Reemplazo de varibles==============########
+list_inner = []
+list_outer = []
 list_environ = []
-price = replace_all(price , dic_replace_txt_price)
-location = replace_all(location , dic_replace_txt_location)
-size = replace_all(size , dic_replace_txt_size)
-num_bedrooms = replace_all(num_bedrooms , dic_replace_txt_num_bedrooms) 
-num_bathrooms = replace_all(num_bathrooms , dic_replace_txt_num_bathrooms)
-inner_feats = replace_all(inner_feats , dic_replace_txt_feats)
-outer_feats = replace_all(outer_feats , dic_replace_txt_feats)
+
+if price != '':
+  price = replace_all(price , dic_replace_txt_price)
+
+if location != '':
+  location = replace_all(location , dic_replace_txt_location)
+
+if size != '':
+  size = replace_all(size , dic_replace_txt_size)
+
+if num_bathrooms != '':
+  num_bedrooms = replace_all(num_bedrooms , dic_replace_txt_num_bedrooms) 
+
+if num_bathrooms != '':
+  num_bathrooms = replace_all(num_bathrooms , dic_replace_txt_num_bathrooms)
+
+####===========Insertar caracteristicas en una lista==============##
+###=======Establecer un conjunto a partir de una lista ---> set_feats = set(lista)===##
+if inner_feats != '':
+  inner_feats = replace_all(inner_feats , dic_replace_txt_feats)
+  lines = inner_feats.split('\n')
+  for line in lines:
+    if line != '':
+      list_inner.append(line)
+
+if outer_feats != '':
+  outer_feats = replace_all(outer_feats , dic_replace_txt_feats)
+  lines = outer_feats.split('\n')
+  for line in lines:
+    if line != '':
+      list_outer.append(line)
+
 if environ_feacts != '':
   environ_feacts = replace_all(environ_feacts , dic_replace_txt_feats)
   lines = environ_feacts.split('\n')
   for line in lines:
     if line != '':
       list_environ.append(line)
-
-########=====test=============######
-# print(price)
-# print(location)
-# print(size)
-# print(num_bedrooms)
-# print(num_bathrooms)
-# print(inner_feats)
-# print(outer_feats)
-# print(environ_feacts)
-
-####===========Insertar caracteristicas en una lista==============##
-###=======Establecer un conjunto a partir de una lista ---> set_feats = set(lista)===##
-list_inner = []
-lines = inner_feats.split('\n')
-for line in lines:
-  if line != '':
-    list_inner.append(line)
-
-list_outer = []
-lines = outer_feats.split('\n')
-for line in lines:
-  if line != '':
-    list_outer.append(line)
-
 
 
 #### =============Test de variables ==========####
